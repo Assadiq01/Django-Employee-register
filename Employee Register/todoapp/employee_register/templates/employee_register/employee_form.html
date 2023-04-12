@@ -1,0 +1,44 @@
+{% extends 'employee_register/index.html' %}
+
+
+{% block content %}
+<style>
+  .title {
+    font-size: 30px;
+    border: 1px solid #16a085;
+    padding: 3px 3px 3px 3px;
+    text-align: center;
+  }
+</style>
+
+    {% if form.instance.pk %}
+      <p class="title">Update Emloyee</p>
+    {% else %}
+      <p class="title">Create Employee</p>
+    {% endif %}
+
+  <div class="card">
+    <center>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-control">
+          <p>Name:</p><p class="input">{{ form.name }}</p>
+        </div>
+        <div>
+          <p>Dept:</p>{{ form.department }}
+        </div>
+        <div>
+          <p>email:</p>{{ form.email }}
+        </div>
+        <div>
+          <p>Address:</p>{{ form.address }}
+        </div>
+        <div>
+          <p>phone:</p>{{ form.phone }}
+        </div>
+        <button type="submit">Save</button>
+      </form>
+    </center>
+  </div>
+  <a class="btn" href="{% url 'employee_register:employee_list' %}">Back to Employee List</a>
+{% endblock %}

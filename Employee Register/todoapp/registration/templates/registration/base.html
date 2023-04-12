@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'css/utilities.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <title>Login | Register</title>
+</head>
+<body>
+
+     <!-- Navbar -->
+     <div class="navbar">
+        <div class="container flex">
+            <h1 class="logo" ><a href="{% url 'employee_register:index' %}">Assadiq Codes</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'employee_register:index' %}">Home</a></li>
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="nav_link">Logout</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'register' %}" class="nav_link">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}" class="nav_link">Login</a>
+                        </li>
+                        {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <center><h1 class="title" style="color: #16a085">Login & Registration Page</h1></center>
+    {% block content %}{% endblock %}
+
+    <footer class="footer bg-dark py-5">
+        <div class="container grid grid-3">
+            <div>
+                <h1>Assadiq Codes
+                </h1>
+                <p>Copyright &copy; 2023</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="docs.html">Docs</a></li>
+                </ul>
+            </nav>
+            <div class="social">
+                <a href="#"><i class="fab fa-github fa-2x"></i></a>
+                <a href="#"><i class="fab fa-facebook fa-2x"></i></a>
+                <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+                <a href="#"><i class="fab fa-twitter fa-2x"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

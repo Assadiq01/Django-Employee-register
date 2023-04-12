@@ -1,0 +1,25 @@
+{% extends 'employee_register/index.html' %}
+
+{% block content %}
+
+<div class="card">
+    <h1 class="total">Departments</h1>
+    <table>
+        <tr id="header">
+            <th>Name</th>
+        </tr>
+        {% for department in departments %}
+            <tr>
+                <td><a href="{% url 'employee_register:department_detail' department.pk %}">{{ department.name }}</a></td>
+        {% empty %}
+            </tr>
+        {% endfor %}
+    </table>
+    <center>
+    <a class="btn" href="{% url 'employee_register:employee_list' %}" style="margin-top: 6%">Back to Employee List</a>
+    </center>
+</div>
+
+
+
+{% endblock %}

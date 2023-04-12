@@ -1,0 +1,29 @@
+{% extends 'employee_register/index.html' %}
+
+{% block content %}
+
+<div class="card">
+    <h1 class="total">{{ department.name }}</h1>
+    <table>
+        <tr id="header">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        {% for employee in department.employee_set.all %}
+            <tr>
+                <td>{{ employee.id }}</td>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.email }}</td>
+        {% empty %}
+            </tr>
+            <p>No employees found.</p>
+        {% endfor %}
+    </table>
+    <center>
+    <a class="btn" href="{% url 'employee_register:employee_list' %}" style="margin-top: 6%">Back to Employee List</a> 
+    <a class="btn" href="{% url 'employee_register:department_list' %}" style="margin-top: 6%">Back to Department List</a>
+    </center>
+</div>
+
+{% endblock %}

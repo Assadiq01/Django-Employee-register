@@ -1,0 +1,176 @@
+{% extends 'employee_register/index.html' %}
+
+{% block content %}
+<style>
+    .pagination {
+      display: inline-block;
+    }
+    
+    .pagination a {
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+    
+    .pagination a.active {
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+    }
+    
+    .pagination a:hover:not(.active) {
+      background-color: #ddd;
+      border-radius: 5px;
+    }
+.delete-btn {
+    border: 1px solid #16a085;
+    background-color: #16a085;
+    padding: 13px 13px 13px 13px;
+    font-size: 15px;
+    border-radius: 8%;
+    color: white;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container#blur.active{
+    filter: blur(20px);
+    pointer-events: none;
+    user-select: none;
+}
+.container .content{
+    position: relative;
+    max-width: 800px;
+}
+
+.container .content img{
+    max-width: 100%;
+    display: block;
+}
+
+a:hover{
+    transition: 1s;
+    background: #2b5c59;
+}
+#popup{
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 600px;
+    padding: 50px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, .30);
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+#popup.active{
+    top: 50%;
+    visibility: visible;
+    opacity: 1;
+    transform: 0.5s;
+}
+@media only screen and (max-width: 768px) {
+    #popup {
+      width: 400px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+    #popup {
+      width: 300px;
+  }
+
+}
+    </style>
+    
+
+    <div class="card">
+        <h1 class="total">Employers List</h1>
+        <center>
+            <table>
+                <tr id="header">
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Dept.</th>
+                    <th>Email</th>
+                </tr>
+                {% for employee in emps %}
+                    <tr>
+                        <td>{{ employee.id }}</td>
+                        <td><a href="{% url 'employee_register:detail' employee.pk %}"> {{ employee.name }}</a></td>
+                        <td>{{ employee.department.name }}</td>
+                        <td>{{ employee.email }}</td>
+                {% empty %}
+                    </tr>
+                {% endfor %}
+    
+            </table>
+        </center>
+    </div>
+    
+    <center>
+      {% if emps.has_other_pages %}
+    <ul class="pagination">
+      {% if emps.has_previous %}
+          <li><a href="?page={{ emps.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% for i in emps.paginator.page_range %}
+          {% if emps.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if emps.has_next %}
+          <li><a href="?page={{ emps.next_page_number }}">Next</a></li>
+          {% endif %}
+    </ul>
+      {% endif %}
+    </center>
+
+
+
+    <center>
+    <div class="container" id="blur">
+      <div class="content">
+          {% if request.user.is_authenticated %}
+        <a class="btn" href="{% url 'employee_register:add_employee' %}" style="margin-top: 6%">Add New Employee</a>
+          {% else %}
+        <a class="btn" href="#" style="margin-top: 6%" onclick="toggle()">Add New Employee</a>
+          {% endif %}
+        <a class="btn" href="{% url 'employee_register:department_list' %}" style="margin-top: 6%">Departments</a>
+      </div>
+    </div>
+    </center>
+    <div id="popup">
+        <h2>Hello Visitor</h2>
+        <p>You can't Update or Delete any of Employer infomation. 
+           You need to login for you to use these features</p>
+        <a class="delete-btn" href="#" onclick="toggle()" style="margin-top: 3%;">Close</a> | 
+        <a class="delete-btn" href="{% url 'login' %}" onclick="toggle()" style="margin-top: 3%;">Login</a>
+    </div>
+</div>
+
+
+
+<script>
+    function toggle() {
+        var blur=document.getElementById('blur');
+        blur.classList.toggle('active');
+        var popup = document.getElementById('popup');
+        popup.classList.toggle('active');
+    }
+</script>
+
+{% endblock %}
+
+
+
+
