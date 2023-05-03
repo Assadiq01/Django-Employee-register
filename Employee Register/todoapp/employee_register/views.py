@@ -16,7 +16,7 @@ def employee_list(request):
     employees = Employee.objects.all()
     page = request.GET.get('page', 1)
 
-    paginator = Paginator(employees, 5) # show 5 employees per page
+    paginator = Paginator(employees, 10) # show 5 employees per page
      
     try:
         emps = paginator.page(page)
